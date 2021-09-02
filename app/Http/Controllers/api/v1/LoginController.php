@@ -5,11 +5,21 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
     public function login(Request $request)
     {
+        $validator = Validator::make($request->all(), array(
+            'email'     => 'required|email',
+            'password'  => 'required'
+        ));
+
+        if($validator->fails()) {
+            return response(['message' => $validator->errors()]);
+        }
+
         # code...
         $login = $request->validate([
             'email'     => ['required', 'string'],
