@@ -50,141 +50,52 @@
                         </div>
 
                         <div class="p-6">
-                            <div id='product-component-1630315695628'></div>
-<script type="text/javascript">
-/*<![CDATA[*/
-(function () {
-  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-  if (window.ShopifyBuy) {
-    if (window.ShopifyBuy.UI) {
-      ShopifyBuyInit();
-    } else {
-      loadScript();
-    }
-  } else {
-    loadScript();
-  }
-  function loadScript() {
-    var script = document.createElement('script');
-    script.async = true;
-    script.src = scriptURL;
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
-    script.onload = ShopifyBuyInit;
-  }
-  function ShopifyBuyInit() {
-    var client = ShopifyBuy.buildClient({
-      domain: 'lucent-homes.myshopify.com',
-      storefrontAccessToken: '6e0c83e831a109abc2f6cebc73088fcc',
-    });
-    ShopifyBuy.UI.onReady(client).then(function (ui) {
-      ui.createComponent('product', {
-        id: '7185707794595',
-        node: document.getElementById('product-component-1630315695628'),
-        moneyFormat: '%24%7B%7Bamount%7D%7D',
-        options: {
-  "product": {
-    "styles": {
-      "product": {
-        "@media (min-width: 601px)": {
-          "max-width": "100%",
-          "margin-left": "0",
-          "margin-bottom": "50px"
-        },
-        "text-align": "left"
-      },
-      "title": {
-        "font-size": "26px"
-      },
-      "price": {
-        "font-size": "18px"
-      },
-      "compareAt": {
-        "font-size": "15.299999999999999px"
-      },
-      "unitPrice": {
-        "font-size": "15.299999999999999px"
-      }
-    },
-    "buttonDestination": "checkout",
-    "layout": "horizontal",
-    "contents": {
-      "img": false,
-      "imgWithCarousel": true,
-      "description": true
-    },
-    "width": "100%",
-    "text": {
-      "button": "Buy now"
-    }
-  },
-  "productSet": {
-    "styles": {
-      "products": {
-        "@media (min-width: 601px)": {
-          "margin-left": "-20px"
-        }
-      }
-    }
-  },
-  "modalProduct": {
-    "contents": {
-      "img": false,
-      "imgWithCarousel": true,
-      "button": false,
-      "buttonWithQuantity": true
-    },
-    "styles": {
-      "product": {
-        "@media (min-width: 601px)": {
-          "max-width": "100%",
-          "margin-left": "0px",
-          "margin-bottom": "0px"
-        }
-      },
-      "title": {
-        "font-family": "Helvetica Neue, sans-serif",
-        "font-weight": "bold",
-        "font-size": "26px",
-        "color": "#4c4c4c"
-      },
-      "price": {
-        "font-family": "Helvetica Neue, sans-serif",
-        "font-weight": "normal",
-        "font-size": "18px",
-        "color": "#4c4c4c"
-      },
-      "compareAt": {
-        "font-family": "Helvetica Neue, sans-serif",
-        "font-weight": "normal",
-        "font-size": "15.299999999999999px",
-        "color": "#4c4c4c"
-      },
-      "unitPrice": {
-        "font-family": "Helvetica Neue, sans-serif",
-        "font-weight": "normal",
-        "font-size": "15.299999999999999px",
-        "color": "#4c4c4c"
-      }
-    },
-    "text": {
-      "button": "Add to cart"
-    }
-  },
-  "option": {},
-  "cart": {
-    "text": {
-      "total": "Subtotal",
-      "button": "Checkout"
-    }
-  },
-  "toggle": {}
-},
-      });
-    });
-  }
-})();
-/*]]>*/
-</script>
+                            <div id="smart-button-container">
+                                <div style="text-align: center;">
+                                  <div id="paypal-button-container"></div>
+                                </div>
+                              </div>
+                            <script src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_CLIENT_ID') }}&enable-funding=venmo&currency=PHP" data-sdk-integration-source="button-factory"></script>
+                            <script>
+                              function initPayPalButton() {
+                                paypal.Buttons({
+                                  style: {
+                                    shape: 'rect',
+                                    color: 'gold',
+                                    layout: 'vertical',
+                                    label: 'paypal',
+
+                                  },
+
+                                  createOrder: function(data, actions) {
+                                    return actions.order.create({
+                                      purchase_units: [{"description":"Lucent Homes","amount":{"currency_code":"PHP","value":50000}}]
+                                    });
+                                  },
+
+                                  onApprove: function(data, actions) {
+                                    return actions.order.capture().then(function(orderData) {
+
+                                      // Full available details
+                                      console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                                      // Show a success message within this page, e.g.
+                                      const element = document.getElementById('paypal-button-container');
+                                      element.innerHTML = '';
+                                      element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                                      // Or go to another URL:  actions.redirect('thank_you.html');
+
+                                    });
+                                  },
+
+                                  onError: function(err) {
+                                    console.log(err);
+                                  }
+                                }).render('#paypal-button-container');
+                              }
+                              initPayPalButton();
+                            </script>
                         </div>
 
                     </div>

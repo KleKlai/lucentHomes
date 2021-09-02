@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->bigInteger('contact_no')->nullable();
+            $table->string('contact_no')->nullable();
             $table->string('gender');
             $table->date('date_of_birth');
             $table->string('tin')->nullable();
