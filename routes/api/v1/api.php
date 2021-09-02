@@ -27,5 +27,5 @@ Route::prefix('/user')->group( function() {
 });
 
 // Route::middleware('auth:api')->post('/onboarding', [OnlineApplicationController::class, 'onBoarding']);
-Route::post('/onboarding', [OnlineApplicationController::class, 'onBoarding']);
+Route::middleware('auth:api')->post('/onboarding', [OnlineApplicationController::class, 'onBoarding']);
 
