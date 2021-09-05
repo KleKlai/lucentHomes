@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(RoleSeeder::class);
-        $this->call(BankSeeder::class);
+        // $this->call(BankSeeder::class);
 
         $user = User::create([
             'first_name'    => Str::random(10),
@@ -49,10 +49,10 @@ class DatabaseSeeder extends Seeder
 
         $user->assignRole('admin');
 
-        Product::create([
-            'name'      => 'Sea Side',
-            'price'     => 1900000
-        ]);
+        // Product::create([
+        //     'name'      => 'Sea Side',
+        //     'price'     => 1900000
+        // ]);
 
         // \App\Models\User::factory(10)->create();
     }

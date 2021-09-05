@@ -57,14 +57,4 @@ Route::view('payment/success','partials.paymentStatus');
 // Product
 Route::resource('/product', ProductController::class);
 
-Route::get('/test', function() {
-
-    App\Models\Loan::create([
-        'user_id'       => 903052,
-        'product_id'    => 1,
-        'equity'        => 1000000,
-        'balance'       => 500000
-    ]);
-});
-
 
