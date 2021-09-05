@@ -24,7 +24,7 @@ class UserController extends Controller
 
         // $users = User::with('Roles')->select('id','first_name', 'last_name', 'email', 'permanent_country_code')->get();
 
-        return view('admin\management\user\index', compact('users'));
+        return view('admin.management.user.index', compact('users'));
     }
 
     /**
@@ -41,7 +41,7 @@ class UserController extends Controller
         });
 
 
-        return view('admin\management\user\create', compact('countrys'));
+        return view('admin.management.user.create', compact('countrys'));
     }
 
     /**
